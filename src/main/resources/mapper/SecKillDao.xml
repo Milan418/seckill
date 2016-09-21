@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.milan.dao.SecKillDao">
+	<!-- 为Dao接口方法提供SQL语句配置 -->
+	<update id="reduceNumber">
+		update 
+			t_seckill
+		set
+			number = number -1
+		where id = #{seckillId} and start_time <![CDATA[ <= ]]>  #{killTime} and end_time >= #{killTime} and number >0
+	</update>
+	
+	<select id="getEntityById" resultType="com.milan.bean.SecKill" parameterType="long">
+		select id,good_name,number,start_time,end_time,create_time from t_seckill where id = #{seckillId}
+	</select>
+	
+	<select id="getAll" resultType="com.milan.bean.SecKill">
+		select id,good_name,number,start_time,end_time,create_time from t_seckill 
+		order by create_time desc limit #{start},#{offset}
+	</select>
+</mapper>
